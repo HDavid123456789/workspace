@@ -1,0 +1,174 @@
+package szamrendszer;
+import java.util.Random;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+public class SzamrGraf extends JPanel	{
+	
+	int egerf;
+	int gomb=0; int gomb2;
+	int egerx=0; int egery=0;
+	int xa; int ya;
+	int gorgo;
+	int egergomb;
+	
+	int maradek[]=new int[20];
+	int szamlalo;
+	int szam=0; int szam2;
+	int gszam=0;
+	int szamrendszer;
+	int max;
+	boolean noveles=false;
+	boolean csokkentes=false;
+	public SzamrGraf() {
+		
+		new Thread(new Runnable() { 
+					public void run() {
+						while (true) {
+							if (getWidth() != 0){
+								if(szam>0){szam2=szam;
+								for(int i=maradek.length-1; i>0; i--){
+									maradek[i]=szam2-((szam2/szamrendszer)*szamrendszer);
+									szam2=szam2/szamrendszer;
+								}
+								max=0;
+								for(int i=0; i<maradek.length; i++){
+									if(maradek[i]==0){
+										max++;
+									}else{
+										i=maradek.length;
+										max=maradek.length-max;
+									}
+								}
+								for(int i=maradek.length-max; i<maradek.length; i++){
+									System.out.print(maradek[i]);
+								}
+								System.out.println("");
+								}
+								
+								betu();
+								if(gorgo==-1){
+									gorgo=0;
+									gszam++;
+									if(gszam==gszam/2*2){
+									szamrendszer++;
+									}
+									}
+									if(gorgo==1){
+									gorgo=0;
+									gszam--;
+									if(gszam==gszam/2*2){
+									szamrendszer--;
+									}
+									}
+								
+									
+								if(xa>50&xa<150& ya>120&ya<140){noveles=true;}else{noveles=false;}
+								if(xa>50&xa<150& ya>215&ya<235){csokkentes=true;}else{csokkentes=false;}
+								
+								if(egerx>50&egerx<150& egery>120&egery<140){
+									szamrendszer++;
+									egerx=0;egery=0;
+								}
+								if(egerx>50&egerx<150& egery>215&egery<235){
+									szamrendszer--;
+									egerx=0; egery=0;
+								}
+								
+								if(szamrendszer<2){szamrendszer=2;}
+								if(szamrendszer>20){szamrendszer=20;}
+								if(szam>1000000){szam=1000000;}
+							}
+							repaint(); 
+							try {
+								Thread.sleep(10); 
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+
+					private void betu() {
+						if(gomb2==49){szam=szam*10+1;}
+						if(gomb2==50){szam=szam*10+2;}
+						if(gomb2==51){szam=szam*10+3;}
+						if(gomb2==52){szam=szam*10+4;}
+						if(gomb2==53){szam=szam*10+5;}
+						if(gomb2==54){szam=szam*10+6;}
+						if(gomb2==55){szam=szam*10+7;}
+						if(gomb2==56){szam=szam*10+8;}
+						if(gomb2==57){szam=szam*10+9;}
+						if(gomb2==48){szam=szam*10;}
+						if(gomb2==8){szam=szam/10;}
+						gomb2=0;
+					}
+					
+				}).start();
+	}
+	
+	
+	
+
+	//kijelzés
+	
+		
+		//színek
+	
+	
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.black);
+		g2.fillRect(0,0,800,425);
+		g2.setColor(Color.white);
+		g2.fillRect(50, 150, 100, 50);
+		g2.fillRect(200, 0, 5, 425);
+		
+		g2.setFont(new Font("Arial", 1, 40));
+		g2.setColor(Color.red);
+		g2.drawString(""+szamrendszer,80,190);
+		
+		if(noveles){g2.setColor(Color.red);}else{g2.setColor(Color.white);}
+		g2.fillRect(50, 125, 100, 10);
+		
+		if(csokkentes){g2.setColor(Color.red);}else{g2.setColor(Color.white);}
+		g2.fillRect(50, 220, 100, 10);
+		
+		g2.setColor(Color.gray);
+		g2.fillRect(8, 298, 184, 54);
+		g2.setColor(Color.white);
+		g2.fillRect(10, 300, 180, 50);
+		g2.fillRect(200, 310, 600, 5);
+		
+		g2.setFont(new Font("Arial", 1, 40));
+		g2.setColor(Color.red);
+		g2.drawString(""+szam,20,340);
+		
+		int sorszam=0;
+		for(int i=maradek.length-max; i<maradek.length; i++){
+			sorszam=i-(maradek.length-max);
+			g2.setColor(Color.white);
+			g2.fillRect(200+(sorszam+1)*(600/max),310,2,115);
+			int ertek=1;
+			for(int t=0; t<max-sorszam-1; t++){
+				ertek=szamrendszer*ertek;
+			}
+			g2.rotate(Math.toRadians(75),200+(sorszam)*(600/max)+150/max,325);
+			g2.setFont(new Font("Arial", 1, 15));
+			g2.setColor(Color.red);
+			g2.drawString(""+ertek,200+(sorszam)*(600/max)+150/max,325);
+			g2.rotate(Math.toRadians(-75),200+(sorszam)*(600/max)+150/max,325);
+			for(int t=0; t<maradek[i]; t++){
+				g2.fillRect(200+(sorszam+1)*(600/max)+300/max,425-(310-t*20),20,20);
+			}
+		}
+		
+	}
+	}

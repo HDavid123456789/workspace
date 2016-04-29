@@ -1,0 +1,74 @@
+package uj;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JPanel;
+public class Graf extends JPanel	{
+	//grafika számolás
+	
+	int kattx; int katty;
+	int egerf;
+	int egerf2;
+	int gomb=0;
+	int gombelenged=0;
+	int x; int y;
+	int xa=0; int ya=0;
+	int xvonszolas; int yvonszolas;
+	int xmozgas; int ymozgas;
+	boolean eger;
+	int szamlalo[]=new int[75];
+	String ertek = ""
++ "***************"
++ "******00*******"
++ "***000000000***"
++ "**00000000000**"
++ "*0000000000000*"; 
+	String jelek="0*";
+
+
+
+	public Graf() {
+		
+		
+		new Thread(new Runnable() { 
+					public void run() {
+						while (true) {
+							if (getWidth() != 0){
+								
+								if(egerf2==1){
+									eger=true;
+									if(egerf==1){
+										eger=false;
+									}
+								}
+								
+							}
+							repaint(); 
+							try {
+								Thread.sleep(1); 
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}).start();
+	}
+	
+	
+	
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.white);
+		g2.fillRect(0, 0, x, y);
+		
+		if(eger){
+			g2.setColor(Color.black);
+			g2.fillOval(xmozgas, ymozgas, 20, 20);
+		}
+		if(egerf==0){
+			g2.setColor(Color.red);
+			g2.fillOval(xvonszolas, yvonszolas, 20, 20);
+		}
+}
+	}

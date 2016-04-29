@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;szimulacio&apos; to &apos;Hazik/src&apos;&#x0D;&#x0A;- Original project: &apos;Házi&apos;&#x0D;&#x0A;- Destination element: &apos;Hazik/src&apos;&#x0D;&#x0A;- Original element: &apos;Házi/src/szimulacio&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="=Hazik/src" element1="/src&lt;szimulacio" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1459676069479" version="1.0"/>
+</session>

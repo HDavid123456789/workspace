@@ -1,0 +1,99 @@
+package uj;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JPanel;
+public class Graf extends JPanel	{
+	//grafika számolás
+	
+	int kattx; int katty;
+	int gomb=0;
+	int gombelenged=0;
+	int x; int y;
+	int xa=0; int ya=0;
+	int xmozgas; int ymozgas;
+	int sor=0; int oszlop;
+	String ertekatiro="";
+	String ertek = ""
++ "***************/"
++ "******00*******/"
++ "***000000000***/"
++ "**00000000000**/"
++ "*0000000000000*/"; 
+	String jelek="0*/";
+
+
+
+	public Graf() {
+		
+		
+		new Thread(new Runnable() { 
+					public void run() {
+						while (true) {
+							if (getWidth() != 0){
+								
+								if(gomb==27){
+									// program bezárása
+									System.exit(0);
+								}
+								
+								if(katty<y/4){
+									ertekatiro=ertek;
+									ertek=ertekatiro.charAt(0)+"";
+									for(int i=0; i<80; i=i+1){
+										ertek=ertek+""+ertekatiro.charAt(i);
+										if(kattx/15*katty/20==i){
+											if(ertek.charAt(i)==jelek.charAt(0)){
+												ertek=ertek+""+jelek.charAt(1);
+											}else{
+												ertek=ertek+""+jelek.charAt(0);
+											}
+										}
+									}
+									kattx=0;
+									katty=0;
+								}
+
+								
+							}
+							repaint(); 
+							try {
+								Thread.sleep(1); 
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}).start();
+	}
+	
+	
+	
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(Color.white);
+		g2.fillRect(0, 0, x, y);
+		
+		
+		for(int i=0; i<80; i=i+1){
+			if(ertek.charAt(i)==jelek.charAt(1)){
+				g2.setColor(Color.black);
+				g2.fillRect(sor*x/15, oszlop*y/20, x/15, y/20);
+				g2.setColor(Color.gray);
+				g2.fillRect(sor*x/15+x/200, oszlop*y/20+x/200, x/15-x/100, y/20-x/100);
+			}
+			sor=sor+1;
+			if(ertek.charAt(i)==jelek.charAt(2)){
+				oszlop=oszlop+1;
+				sor=0;
+			}
+		}
+		sor=0;
+		oszlop=0;
+		
+			g2.setColor(Color.black);
+			g2.fillRect(0, y/4, x, y/200);
+			g2.fillOval(xmozgas, ymozgas, 20, 20);
+}
+	}
